@@ -1,0 +1,272 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "README.md",
+			"settings":
+			{
+				"buffer_size": 86,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"python27 \"Project 2 Grader.py\" \"Project 2 submission (Responses) - Form Responses.csv\""
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj2/TFPyModeller/README.md",
+		"/C/Users/sl7v6/SkyDrive/Moonlights/ESO/Mods/UnityGroupFrame/lib/Main.lua",
+		"/C/Users/sl7v6/SkyDrive/Moonlights/ESO/Mods/UnityGroupFrame/lib/ui/Buffs.lua",
+		"/C/Users/sl7v6/SkyDrive/Moonlights/ESO/Mods/UnityGroupFrame/xml/bindings.xml",
+		"/C/Users/sl7v6/SkyDrive/Moonlights/ESO/Mods/UnityGroupFrame/xml/UnityGroupFrame.xml",
+		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/Atom.py",
+		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/runner.bat",
+		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/TBModeller.py",
+		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/testdata/T0644.dr",
+		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/targets/T0644.pdb",
+		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/templates-T0644/4FR9_A.pdb",
+		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/testdata/T0644.fasta",
+		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/alignments-T0644/4IPB_A-1.alignment",
+		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/alignments-T0644/4HBR_A-2.alignment",
+		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/alignments-T0644/4FR9_A-0.alignment",
+		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/alignments-T0644/3U1W_A-4.alignment",
+		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/alignments-T0644/4K61_A-3.alignment",
+		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/testdata/T0644.pdb",
+		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/testdata/4FR9.fasta.txt",
+		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/testdata/4FR9.pdb",
+		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/data/Targets/T0644.dr",
+		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/data/Templates/4FR9.pdb",
+		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/data/Templates/4FR9.fasta.txt",
+		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/Protein.py",
+		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/data/Templates/1eyqA.T0644.pdb.res",
+		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/protein.py",
+		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/LICENSE",
+		"/C/Users/sl7v6/Downloads/web_blast.pl",
+		"/C/Users/sl7v6/SkyDrive/School/TA-F13-CS4830_SciEngWWW/Final Grades/wwwcoder.py",
+		"/C/Users/sl7v6/SkyDrive/School/TA-F13-CS4830_SciEngWWW/Project 2/Project 2 Grader.py",
+		"/C/Users/sl7v6/SkyDrive/School/TA-F13-CS4830_SciEngWWW/Project 3/curlite.py",
+		"/C/Users/sl7v6/SkyDrive/School/TA-F13-CS4830_SciEngWWW/Project 3/project3grader.py",
+		"/C/Users/sl7v6/SkyDrive/School/TA-F13-CS4830_SciEngWWW/Project 3/project3grader-alt.py",
+		"/C/Users/sl7v6/.theanorc.txt",
+		"/C/Users/sl7v6/Downloads/scatter3d_demo.py",
+		"/C/Users/sl7v6/SkyDrive/School/TA-F13-CS4830_SciEngWWW/Project 3/output-jevinanderson.txt",
+		"/C/Windows/Logs/CBS/CBS.log",
+		"/C/Users/sl7v6/Downloads/chatdemo/demo.html",
+		"/C/Users/sl7v6/Downloads/chatdemo/server.go",
+		"/C/Users/sl7v6/AppData/Local/Temp/7zO567A.tmp/Lab6-1.txt",
+		"/C/Users/sl7v6/SkyDrive/School/TA-F13-CS4830_SciEngWWW/Project 3/output-abhishah.txt",
+		"/C/Users/sl7v6/SkyDrive/School/F13-CS8001_COM/Project3-DynamicProgramming/Visualization - Group 3/script.m",
+		"/C/Users/sl7v6/SkyDrive/School/TA-F13-CS4830_SciEngWWW/Project 3/outfile3.txt",
+		"/C/Users/sl7v6/SkyDrive/School/F13-CS8001_COM/Project2/data/KN57/kn57_dist.txt",
+		"/C/Users/sl7v6/SkyDrive/School/F13-CS8001_COM/Project2/data/KN57/kn57_main.txt",
+		"/C/Users/sl7v6/SkyDrive/School/F13-CS8001_COM/Project2/data/LAU15/lau15_tsp.txt",
+		"/C/Users/sl7v6/SkyDrive/School/TA-F13-CS4830_SciEngWWW/Project 3/outfile2.txt",
+		"/C/Users/sl7v6/SkyDrive/School/TA-F13-CS4830_SciEngWWW/Project 3/project3gradertemp.py",
+		"/C/Users/sl7v6/SkyDrive/School/TA-F13-CS4830_SciEngWWW/Project 3/outfile.txt",
+		"/C/Users/sl7v6/SkyDrive/School/TA-F13-CS4830_SciEngWWW/Project 2 Grader.py",
+		"/C/Users/sl7v6/SkyDrive/School/TA-F13-CS4830_SciEngWWW/curlite.py",
+		"/C/Users/sl7v6/SkyDrive/School/TA-F13-CS4830_SciEngWWW/wwwcoder.py",
+		"/C/Users/sl7v6/Downloads/log (2).txt",
+		"/C/Program Files/Sublime Text 3/Packages/Python.sublime-package",
+		"/C/Users/sl7v6/Downloads/logfile.txt",
+		"/C/Users/sl7v6/Downloads/log (1).txt",
+		"/C/Users/sl7v6/Downloads/log.txt"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"self",
+			"\\n",
+			"status, msg",
+			"msg = response.msg"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"@mail.missouri.edu\\n",
+			"status, reason",
+			"reason = response.reason"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "README.md",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 86,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.5,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 100.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "TFPyModeller.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
