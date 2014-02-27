@@ -1,0 +1,64 @@
+# Simulated Annealing for Score Maximization
+WHILE count < max_steps:
+	temperature := temperature - cooling_rate
+	candidate := solution.neighbor()
+	score_difference := score(solution) - score(candidate)
+
+	# Candidate score is worse than current solution
+	IF score_difference > 0:
+		# Higher the temp, closer prob_to_accept gets to 1
+		prob_to_accept := e^(score_difference/temperature)
+
+		# Select from uniform distribution. If higher than
+		# prob_to_accept skip that candidate and try again
+		IF prob_to_accept > random():
+			continue
+		END
+	END
+	solution := candidate
+END
+
+
+
+# Simulated Annealing for Score Maximization
+WHILE count < max_steps:
+	temperature := temperature - cooling_rate
+	candidate := solution.neighbor()
+
+	# Get score deltas
+	score_difference1 := score1(solution) - score1(candidate)
+	score_difference2 := score2(solution) - score2(candidate)
+	score_difference3 := score3(solution) - score3(candidate)
+
+	# Two or more candidate scores are worse than current solution
+	IF two_or_more(score_differences > 0):
+		# Normalize score differences based on their scoring methods
+		score_difference := normalize_and_sum(score_differences)
+
+		# Higher the temp, closer prob_to_accept gets to 1
+		prob_to_accept := e^(score_difference/temperature)
+
+		# Select from uniform distribution. If higher than
+		# prob_to_accept skip that candidate and try again
+		IF prob_to_accept > random():
+			continue
+		END
+	END
+	solution := candidate
+END
+
+
+
+s ← s0; e ← E(s)                    // Initial state, energy.
+sbest ← s; ebest ← e                // Initial "best" solution.
+k ← 0                               // Energy evaluation count.
+while k < kmax and e > emax         // While time left & not good enough:
+  T ← temperature(k/kmax)           // Temperature calculation.
+  snew ← neighbour(s)               // Pick some neighbour.
+  enew ← E(snew)                    // Compute its energy.
+  if P(e, enew, T) > random() then  // Should we move to it?
+    s ← snew; e ← enew              // Yes, change state.
+  if enew < ebest then              // Is this a new best?
+    sbest ← snew; ebest ← enew      // Save 'new neighbour' to 'best found'.
+  k ← k + 1                         // One more evaluation done
+return sbest                        // Return the best solution found.
