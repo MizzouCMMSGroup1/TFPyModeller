@@ -21,10 +21,10 @@ with open(RAMA_NAME) as f:
 
 sequence = sequence_data[1:] #first line is column data
 
-number_acids = len(sequence_data)
+number_acids = len(sequence)
 
-i = 2
-while i<number_acids-3:
+i = 2 #throw away the first and last amino acid
+while i<number_acids-2:
     seq = sequence[i-1][0], sequence[i][0], sequence[i+1][0]
     three_seq = [seq[0]+seq[1]+seq[2]]
     angles_phi = float(sequence[i-1][2:8]), float(sequence[i][2:8]), float(sequence[i+1][2:8])
