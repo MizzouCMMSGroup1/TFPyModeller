@@ -72,7 +72,8 @@ def build_model(pdb_number):
         i+=3
     
     #some code to deal with last one/two acids
-    append_sequence(pdb_number, INPUT_SEQUENCE[sequence_length-3], INPUT_SEQUENCE[sequence_length-2], INPUT_SEQUENCE[sequence_length-1], sequence_length%3)
+    if (sequence_length%3>0):
+        append_sequence(pdb_number, INPUT_SEQUENCE[sequence_length-3], INPUT_SEQUENCE[sequence_length-2], INPUT_SEQUENCE[sequence_length-1], sequence_length%3)
     
 
 def score_model(pdb_number):
