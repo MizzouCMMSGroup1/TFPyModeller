@@ -66,8 +66,11 @@ def score_model(pdb_number):
     #dfire_score = os.system("./dDFIRE " + PDB_OUT_LIPA)
 
     output = subprocess.check_output("./dDFIRE " + PDB_OUT_LIPA, shell=True)
-    
-    print "dfire_score: ", output
+
+    output_split = output.split(":")
+    output_split_nums = output_split[1].split(" ")
+
+    print "dfire_score: ", float(output_split_nums[1])
 
 
 
@@ -82,3 +85,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
