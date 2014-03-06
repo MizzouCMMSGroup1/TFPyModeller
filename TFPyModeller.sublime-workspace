@@ -3,15 +3,67 @@
 	{
 		"selected_items":
 		[
+			[
+				"Wout",
+				"Wout"
+			],
+			[
+				"insize",
+				"insize"
+			],
+			[
+				"wine",
+				"wine_testing"
+			],
+			[
+				"sear",
+				"searches"
+			],
+			[
+				"features",
+				"features"
+			],
+			[
+				"templat",
+				"templatestart"
+			],
+			[
+				"targ",
+				"targetfolder"
+			],
+			[
+				"resname",
+				"resname"
+			],
+			[
+				"amino",
+				"amino1to3"
+			],
+			[
+				"alignmen",
+				"alignmentsfolder"
+			],
+			[
+				"fast",
+				"fastasfolder"
+			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "README.md",
+			"file": "src/build_test_proteins.py",
 			"settings":
 			{
-				"buffer_size": 86,
+				"buffer_size": 3773,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/test_hill_climbing.py",
+			"settings":
+			{
+				"buffer_size": 7412,
 				"line_ending": "Windows"
 			}
 		}
@@ -44,24 +96,55 @@
 	},
 	"file_history":
 	[
-		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj2/TFPyModeller/README.md",
-		"/C/Users/sl7v6/SkyDrive/Moonlights/ESO/Mods/UnityGroupFrame/lib/Main.lua",
-		"/C/Users/sl7v6/SkyDrive/Moonlights/ESO/Mods/UnityGroupFrame/lib/ui/Buffs.lua",
-		"/C/Users/sl7v6/SkyDrive/Moonlights/ESO/Mods/UnityGroupFrame/xml/bindings.xml",
-		"/C/Users/sl7v6/SkyDrive/Moonlights/ESO/Mods/UnityGroupFrame/xml/UnityGroupFrame.xml",
-		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/Atom.py",
-		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/runner.bat",
-		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/TBModeller.py",
-		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/testdata/T0644.dr",
-		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/targets/T0644.pdb",
-		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/templates-T0644/4FR9_A.pdb",
-		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/testdata/T0644.fasta",
-		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/alignments-T0644/4IPB_A-1.alignment",
-		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/alignments-T0644/4HBR_A-2.alignment",
-		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/alignments-T0644/4FR9_A-0.alignment",
-		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/alignments-T0644/3U1W_A-4.alignment",
-		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/alignments-T0644/4K61_A-3.alignment",
-		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/testdata/T0644.pdb",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/prj2/TFPyModeller/src/test_hill_climbing.py",
+		"/C/Users/Sean/Documents/GitHub/EvoAE/src/mnist.py",
+		"/C/Users/Sean/Documents/GitHub/EvoEA/data/wine.csv",
+		"/C/Users/Sean/Documents/GitHub/EvoEA/src/EvoEA.py",
+		"/C/Users/Sean/Documents/GitHub/EvoEA/LICENSE",
+		"/C/Users/Sean/Documents/GitHub/EvoEA/EvoEA.py",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/tbmodeller.sublime-project",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/testdata/T0644.fasta",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/testdata/T0644.pdb",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/targets/T0644.pdb",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/report/Report_v1.0.tex",
+		"/C/Jmol/LEAME.txt",
+		"/C/Jmol/README.txt",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/hhsuite-2.0.9/scripts/hhmakemodel.pl",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/PDB.py",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/Alignment.py",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/Template.py",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/ModObj.py",
+		"/C/FCCC/Scwrl4/Scwrl4.ini",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/templates-T0644/4FR9_A.pdb",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/Tools/Score_Function/TMscore",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/tmp",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/alignments-T0644/4FR9_A-0.alignment",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/alignments-T0644/4IPB_A-1.alignment",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/fastas-T0644/4FR9_A.fasta",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/data/examples/4FR9.pdb",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/testdata/T0644.dr",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/templates-T0644/3U1W_A.pdb",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/hhsuite-2.0.9/src/hhsearch.C",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/alignments-T0644/4HBR_A-0.alignment",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/alignments-T0644/2BWM_A-0.alignment",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/templates-T0644/2BWM_A.pdb",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/fastas-T0644/2BWM_A.fasta",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/hhsuite-2.0.9/src/hhhmm.C",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/hhsuite-2.0.9/README",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/hhsuite-2.0.9/src/hhfullalignment.C",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/hhsuite-2.0.9/src/hhconsensus.C",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/hhsuite-2.0.9/src/hhblits.C",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/hhsuite-2.0.9/src/hhalign.C",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/hhsuite-2.0.9/src/cs/sequence.h",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/hhsuite-2.0.9/src/hhmake.C",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/hhsuite-2.0.9/src/hhalignment.h",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/hhsuite-2.0.9/src/cs/alignment.h",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/templates-T0644/4FR9.pdb",
+		"/C/Users/Sean/Downloads/4FR9.pdb",
+		"/C/Users/Sean/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/templates-T0644/YP_098548.pdb",
+		"/C/Users/Sean/Downloads/sequence.gbsta.xml",
+		"/C/Python27/README.txt",
+		"/C/Users/Sean/Documents/adults-normalized",
 		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/testdata/4FR9.fasta.txt",
 		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/src/testdata/4FR9.pdb",
 		"/C/Users/sl7v6/SkyDrive/School/S14-CS8710_CMMS/Group/prj1/data/Targets/T0644.dr",
@@ -104,7 +187,7 @@
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 43.0
 	},
 	"find_in_files":
 	{
@@ -118,7 +201,22 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"self",
+			"insSize",
+			"\\s*\\n",
+			"\\s*",
+			"\\],",
+			"\\[",
+			"[",
+			"Created",
+			"range(",
+			"debug",
+			"resolution",
+			"(\\w+)\\s(\\w+)",
+			"(\\w)\\s(\\w)",
+			" ",
+			"self.pdb",
+			"ReadAlignment",
+			"WritePairwiseAlignments",
 			"\\n",
 			"status, msg",
 			"msg = response.msg"
@@ -126,9 +224,13 @@
 		"highlight": true,
 		"in_selection": false,
 		"preserve_case": false,
-		"regex": false,
+		"regex": true,
 		"replace_history":
 		[
+			"insize",
+			"\\n",
+			"",
+			"\"\\1\":\"\\2\"",
 			"@mail.missouri.edu\\n",
 			"status, reason",
 			"reason = response.reason"
@@ -147,24 +249,26 @@
 			[
 				{
 					"buffer": 0,
-					"file": "README.md",
-					"semi_transient": true,
+					"file": "src/build_test_proteins.py",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 86,
+						"buffer_size": 3773,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								454,
+								454
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -176,8 +280,39 @@
 			]
 		},
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 1,
+					"file": "src/test_hill_climbing.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7412,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								539,
+								539
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -230,7 +365,7 @@
 	"project": "TFPyModeller.sublime-project",
 	"replace":
 	{
-		"height": 42.0
+		"height": 80.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -264,7 +399,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 150.0,
+	"side_bar_width": 186.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
