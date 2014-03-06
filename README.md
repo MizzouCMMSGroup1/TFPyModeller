@@ -22,9 +22,11 @@ Python based Template Free Modelling of Protein Structures
 Requirements:
 =============
 #####Required:  
-* [Python 3.3 32 bit](http://www.python.org/download/)  
-* [Numpy 1.8 for Python 3.3 32 bit](http://www.numpy.org/)  
-* [Biopython 1.63 for Python 3.3 32 bit](http://biopython.org/wiki/Download)  
+* [Python 2.7 32 bit](http://www.python.org/download/)  
+* [dDFIRE](http://sparks.informatics.iupui.edu/yueyang/server/dDFIRE/)
+* Lipa
+* Rama
+* Crankite
 
 #####Optional:  
 * [Jmol](http://jmol.sourceforge.net/download/)  
@@ -32,5 +34,7 @@ Requirements:
 To Run:
 =======
 ```
-$ echo 'Coming Soon...'
+$ python simulated_annleaing.py
+# Currently no way to directly input sequences
+# Working on command line inputs now
 ```
