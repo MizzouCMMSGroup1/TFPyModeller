@@ -4,8 +4,11 @@ INPUT_SEQUENCE = 'MKFLKFSLLTAVLLSVVFAFSSCGDDDDTGYLPPSQAIQDALKKLYPNATAIKWEQKGVYYV
 '''fragment database'''
 DATABASE_NAME = 'fragment_database/300PDB_three_sequences.db'
 
+'''store working files in temp_out'''
+TMP_DIR = "temp_out/"
+
 '''store working files in temp_out subdirectory/start of each file'''
-PDB_PREPEND_NAME = "temp_out/simulation_"
+PDB_PREPEND_NAME = TMP_DIR+"simulation_"
 
 '''number of hill climbing simulations to run'''
 NUMBER_SIMULATIONS = 100
@@ -186,9 +189,21 @@ def build_score_pdb_model(pdb_number):
 def main():
 
     #cleanup
-    for i in range(0,NUMBER_SIMULATIONS+1):
+    if not os.path.exists(TMP_DIR):
+        print("Making temp directory")
+        os.mkdir(TMP_DIR)
+    else:
+        print("Clearing temp directory")
+        for root,dirs,files in os.walk(TMP_DIR,topdown=False):
+            for name in files:
+                os.remove(os.path.join(root,name))
+    '''
+    #cleanup
+    for i in range(1,NUMBER_SIMULATIONS+1):
+        if os.path.exists(phipsi_file_name(i)): os.rm()
         os.system("rm " + phipsi_file_name(i))
         os.system("rm " + pdb_lipa_name(i))
+    '''
 
     #build initial random model
     build_model(0)

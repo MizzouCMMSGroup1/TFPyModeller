@@ -2,7 +2,9 @@ INPUT_SEQUENCE = 'MKFLKFSLLTAVLLSVVFAFSSCGDDDDTGYLPPSQAIQDALKKLYPNATAIKWEQKGVYYV
 
 DATABASE_NAME = 'fragment_database/300PDB_three_sequences.db'
 
-PDB_PREPEND_NAME = "temp_out/simulation_"
+TMP_DIR = "temp_out/"
+
+PDB_PREPEND_NAME = TMP_DIR+"simulation_"
 
 NUMBER_SIMULATIONS = 5
 
@@ -94,9 +96,21 @@ def score_model(pdb_number):
 def main():
 
     #cleanup
+    if not os.path.exists(TMP_DIR):
+        print("Making temp directory")
+        os.mkdir(TMP_DIR)
+    else:
+        print("Clearing temp directory")
+        for root,dirs,files in os.walk(TMP_DIR,topdown=False):
+            for name in files:
+                os.remove(os.path.join(root,name))
+    '''
+    #cleanup
     for i in range(1,NUMBER_SIMULATIONS+1):
+        if os.path.exists(phipsi_file_name(i)): os.rm()
         os.system("rm " + phipsi_file_name(i))
         os.system("rm " + pdb_lipa_name(i))
+    '''
 
     #build models
     for i in range(1,NUMBER_SIMULATIONS+1):
