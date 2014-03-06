@@ -164,7 +164,7 @@ def randomize_model(old_model_number, new_model_number):
 
     sequence_length = len(INPUT_SEQUENCE)
     
-    random_offset = random.randint(0,sequence_length-2) #can't select beyond last residue
+    random_offset = random.randint(0,sequence_length-3) #can't select beyond last residue
 
     replace_sequence(old_model_number, new_model_number, INPUT_SEQUENCE[random_offset], INPUT_SEQUENCE[random_offset+1], INPUT_SEQUENCE[random_offset+2], random_offset)
 
