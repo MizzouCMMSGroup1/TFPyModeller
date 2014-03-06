@@ -177,6 +177,22 @@ def replace_sequence3(old_model_number, new_model_number, a,b,c, sequence_offset
         print "bad things happened"
         exit()
     
+    sequence = [a,b,c]
+    #print sequence
+    print "finding sequence matching:", ''.join(sequence)
+    
+    data = None
+    i = 0
+    
+    while data == None:
+      query = ''.join(sequence)
+      cursor3.execute("SELECT * FROM sequences WHERE seq= '%s' ORDER BY RANDOM() LIMIT 1;" % query)
+      data = cursor3.fetchone()
+      sequence[i%3] = bmatrix[sequence[i%3]][0][0]
+      i+=1
+      
+    '''
+    
     sequence = a+b+c
     #print sequence
     
@@ -194,6 +210,8 @@ def replace_sequence3(old_model_number, new_model_number, a,b,c, sequence_offset
             return
         
         print "couldn't find sequence:", sequence, "using replacement:", data["seq"]
+        
+    '''
     
     phipsi_replace3(old_model_number, new_model_number,a,data["acid_a_phi"],data["acid_a_psi"],b,data["acid_b_phi"],data["acid_b_psi"],c,data["acid_c_phi"],data["acid_c_psi"], sequence_offset)
 
