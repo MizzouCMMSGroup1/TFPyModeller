@@ -7,14 +7,11 @@ INPUT_SEQUENCE = 'MKFLKFSLLTAVLLSVVFAFSSCGDDDDTGYLPP'
 THREE_SEQUENCE_DATABASE_NAME = 'fragment_database/17K_PDB_three_sequences.db'
 NINE_SEQUENCE_DATABASE_NAME = 'fragment_database/17K_PDB_nine_sequences.db'
 
-'''store working files in temp_out'''
-TMP_DIR = "temp_out/"
+'''directory to store all target files'''
+TARGET_DIR = "targets/"
 
 '''name for files'''
 TARGET_NAME = "T9999"
-
-'''store working files in temp_out subdirectory/start of each file'''
-PDB_PREPEND_NAME = TMP_DIR+TARGET_NAME+"_simulation_"
 
 '''number of hill climbing simulations to run'''
 NUMBER_SIMULATIONS = 1000
@@ -43,19 +40,22 @@ cursor3 = conn3.cursor()
 cursor9 = conn9.cursor()
 
 #utility functions
-def phipsi_file_name(phipsi_number):
+def phipsi_file_name(seq_length,phipsi_number):
     '''return phipsi/lipa file name for input number'''
-    return PDB_PREPEND_NAME + str(phipsi_number) +".txt"
+    return TARGET_DIR+TARGET_NAME+"/phipsi/"+ "sequence%d-%d" % (seq_length,phipsi_number) +".txt"
     
-def pdb_lipa_name(pdb_number):
+def pdb_lipa_name(seq_length,pdb_number):
     '''return PDB file name for input number'''
-    return PDB_PREPEND_NAME + "lipa_" + str(pdb_number) +".pdb"
+    return TARGET_DIR+TARGET_NAME+"/lipa/"+ "sequence%d-%d" % (seq_length,pdb_number) +".pdb"
+
+def pdb_save_name(pdb_number):
+    return TARGET_DIR+TARGET_NAME+"/pdbs/"+ "sequence%d" % (pdb_number) +".pdb"
 
 #code for initialization of protein randomly from sequence database
-def phipsi_append(phipsi_number, acid, phi, psi):
+def phipsi_append(seq_length,phipsi_number, acid, phi, psi):
     '''add data to phipsi file'''
     
-    PHIPSI_OUT = phipsi_file_name(phipsi_number)
+    PHIPSI_OUT = phipsi_file_name(seq_length,phipsi_number)
     
     file = open(PHIPSI_OUT, "a")
     file.write("{0} {1:>6} {2:>6}\n".format(acid, phi, psi))
@@ -71,11 +71,11 @@ def append_sequence9(pdb_number, a,b,c, d,e,f, g,h,i, skip_sequences=0, head=Fal
     base_sequence = [a,b,c,d,e,f,g,h,i]
     sequence = copy.copy(base_sequence)
     #print sequence
-    print "finding sequence matching:", ''.join(sequence)
+    print("finding sequence matching:", ''.join(sequence))
 
     data = None
-    i = 0
     j = 0
+    k = 0
 
     while data == None:
         query = ''.join(sequence)
@@ -83,47 +83,55 @@ def append_sequence9(pdb_number, a,b,c, d,e,f, g,h,i, skip_sequences=0, head=Fal
         data = cursor9.fetchone()
         if data == None:
           sequence = copy.copy(base_sequence)
-          sequence[i%9] = bmatrix[base_sequence[i%9]][0][0]
-          if i%9 == 0 and i > 0:
-            j = j+1
-            base_sequence[j%9] = bmatrix[base_sequence[j%9]][0][0]
-          print "no match found. using",''.join(sequence),"instead"
-          i += 1
-        if i > 17: # after three cycles we're too far away from the original sequence
-          if skip_sequences < 3:
-            append_sequence3(pdb_number, a,b,c, skip_sequences=skip_sequences, head=head)
-          if skip_sequences < 6:
-            append_sequence3(pdb_number, d,e,f, skip_sequences=skip_sequences-3)
-          if skip_sequences < 9:
-            append_sequence3(pdb_number, g,h,i, skip_sequences=skip_sequence-6,tail=tail)
+          sequence[j%9] = bmatrix[base_sequence[j%9]][0][0]
+          if j%9 == 0 and j > 0:
+            base_sequence[k%9] = bmatrix[base_sequence[k%9]][0][0]
+            k = k+1
+          print("no match found. using",''.join(sequence),"instead")
+          j += 1
+        if j > 17: # after three cycles we're too far away from the original sequence
+          if skip_sequences > 0:
+                if skip_sequences < 3:
+                    append_sequence3(pdb_number, a,b,c, skip_sequences=skip_sequences)
+                    append_sequence3(pdb_number, d,e,f)
+                    append_sequence3(pdb_number, g,h,i, tail=tail)
+                elif skip_sequences < 6:
+                    append_sequence3(pdb_number, d,e,f, skip_sequences=skip_sequences-3)
+                    append_sequence3(pdb_number, g,h,i, tail=tail)
+                elif skip_sequences < 9:
+                    append_sequence3(pdb_number, g,h,i, skip_sequences=skip_sequences-6, tail=tail)
+          else:
+              append_sequence3(pdb_number, a,b,c, head=head)
+              append_sequence3(pdb_number, d,e,f)
+              append_sequence3(pdb_number, g,h,i)
           return
 
     #using modular arithmetic to only update the last few residues when needed
 
     if skip_sequences<1:
         if head:
-            phipsi_append(pdb_number,'nan',data["acid_a_psi"])
+            phipsi_append(9,pdb_number,'nan',data["acid_a_psi"])
         else:
-            phipsi_append(pdb_number,a,data["acid_a_phi"],data["acid_a_psi"])
+            phipsi_append(9,pdb_number,a,data["acid_a_phi"],data["acid_a_psi"])
     if skip_sequences<2:
-        phipsi_append(pdb_number,b,data["acid_b_phi"],data["acid_b_psi"])
+        phipsi_append(9,pdb_number,b,data["acid_b_phi"],data["acid_b_psi"])
     if skip_sequences<3:
-        phipsi_append(pdb_number,c,data["acid_c_phi"],data["acid_c_psi"])
+        phipsi_append(9,pdb_number,c,data["acid_c_phi"],data["acid_c_psi"])
     if skip_sequences<4:
-        phipsi_append(pdb_number,d,data["acid_d_phi"],data["acid_d_psi"])
+        phipsi_append(9,pdb_number,d,data["acid_d_phi"],data["acid_d_psi"])
     if skip_sequences<5:
-        phipsi_append(pdb_number,e,data["acid_e_phi"],data["acid_e_psi"])
+        phipsi_append(9,pdb_number,e,data["acid_e_phi"],data["acid_e_psi"])
     if skip_sequences<6:
-        phipsi_append(pdb_number,f,data["acid_f_phi"],data["acid_f_psi"])
+        phipsi_append(9,pdb_number,f,data["acid_f_phi"],data["acid_f_psi"])
     if skip_sequences<7:
-        phipsi_append(pdb_number,g,data["acid_g_phi"],data["acid_g_psi"])
+        phipsi_append(9,pdb_number,g,data["acid_g_phi"],data["acid_g_psi"])
     if skip_sequences<8:
-        phipsi_append(pdb_number,h,data["acid_h_phi"],data["acid_h_psi"])
+        phipsi_append(9,pdb_number,h,data["acid_h_phi"],data["acid_h_psi"])
     if skip_sequences<9:
         if tail:
-            phipsi_append(pdb_number,i,data["acid_i_phi"],'nan')
+            phipsi_append(9,pdb_number,i,data["acid_i_phi"],'nan')
         else:
-            phipsi_append(pdb_number,i,data["acid_i_phi"],data["acid_i_psi"])
+            phipsi_append(9,pdb_number,i,data["acid_i_phi"],data["acid_i_psi"])
 
     
 
@@ -153,6 +161,10 @@ def build_model9(pdb_number):
                                      INPUT_SEQUENCE[sequence_length-3], INPUT_SEQUENCE[sequence_length-2], INPUT_SEQUENCE[sequence_length-1],
                                      skip_sequences=sequence_length%9,tail=True)
 
+    src_file = phipsi_file_name(3,pdb_number)
+    dest_file = phipsi_file_name(9,pdb_number)
+    shutil.copy(src_file,dest_file)
+    os.remove(src_file)
 
 #code for randomly replacing protein sub-sequences (from sequence database)
 def phipsi_replace9(old_model_number, new_model_number, a, a_phi, a_psi, b, b_phi, b_psi, c, c_phi, c_psi,
@@ -164,13 +176,13 @@ def phipsi_replace9(old_model_number, new_model_number, a, a_phi, a_psi, b, b_ph
         raise BaseException("phipsi_replace3 requires a sequence offset >= 0.", sequence_offset, "was given")
         exit()
     else:
-        print "seq offset:", sequence_offset, "old model:", old_model_number, "new model:", new_model_number
+        print("seq offset:", sequence_offset, "old model:", old_model_number, "new model:", new_model_number)
 
-    PHIPSI_IN = phipsi_file_name(old_model_number)
+    PHIPSI_IN = phipsi_file_name(9,old_model_number)
     # clone off the file in case of updating itself
     shutil.copy(PHIPSI,'temp.txt')
     PHIPSI_IN = 'temp.txt'
-    PHIPSI_OUT = phipsi_file_name(new_model_number)
+    PHIPSI_OUT = phipsi_file_name(9,new_model_number)
     
     lines = [line.strip() for line in open(PHIPSI_IN)]
     numlines = len(lines)
@@ -230,7 +242,7 @@ def replace_sequence9(old_model_number, new_model_number, a,b,c, d,e,f, g,h,i, s
     base_sequence = [a,b,c,d,e,f,g,h,i]
     sequence = copy.copy(base_sequence)
     #print sequence
-    print "finding sequence matching:", ''.join(sequence)
+    print("finding sequence matching:", ''.join(sequence))
 
     data = None
     j = 0
@@ -244,15 +256,27 @@ def replace_sequence9(old_model_number, new_model_number, a,b,c, d,e,f, g,h,i, s
           sequence = copy.copy(base_sequence)
           sequence[j%9] = bmatrix[base_sequence[j%9]][0][0]
           if j%9 == 0 and j > 0:
-            k = k+1
             base_sequence[k%9] = bmatrix[base_sequence[k%9]][0][0]
-          print "no match found. using",''.join(sequence),"instead"
+            k = k+1
+          print("no match found. using",''.join(sequence),"instead")
           j += 1
         if j > 17: # after three cycles we're too far away from the original sequence
-          print "reverting to sequence length 3"
+          print("reverting to sequence length 3")
+          # Create a length3 copy of the file in order
+          # to use the replace_sequence3 method, which
+          # only takes a length3 phipsi file
+          src_file = phipsi_file_name(9,old_model_number)
+          dest_file = phipsi_file_name(3,old_model_number)
+          shutil.copy(src_file,dest_file)
           replace_sequence3(old_model_number, new_model_number, a,b,c, sequence_offset)
           replace_sequence3(new_model_number, new_model_number, d,e,f, sequence_offset+3)
           replace_sequence3(new_model_number, new_model_number, g,h,i, sequence_offset+6)
+          # Swap the file back and cleanup your mess
+          os.remove(dest_file)
+          src_file = phipsi_file_name(3,new_model_number)
+          dest_file = phipsi_file_name(9,new_model_number)
+          shutil.copy(src_file,dest_file)
+          os.remove(src_file)
           return
 
     phipsi_replace9(old_model_number, new_model_number,a,data["acid_a_phi"],data["acid_a_psi"],
@@ -288,7 +312,7 @@ def append_sequence3(pdb_number, a,b,c, skip_sequences=0,head=False,tail=False):
     
     sequence = [a,b,c]
     #print sequence
-    print "finding sequence matching:", ''.join(sequence)
+    print("finding sequence matching:", ''.join(sequence))
     
     data = None
     i = 0
@@ -303,23 +327,23 @@ def append_sequence3(pdb_number, a,b,c, skip_sequences=0,head=False,tail=False):
     #using modular arithmetic to only update the last 1 or 2 residues when needed
     if skip_sequences==0:
         if head:
-          phipsi_append(pdb_number,a,'nan',data["acid_a_psi"])
+          phipsi_append(3,pdb_number,a,'nan',data["acid_a_psi"])
         else:
-          phipsi_append(pdb_number,a,data["acid_a_phi"],data["acid_a_psi"])
+          phipsi_append(3,pdb_number,a,data["acid_a_phi"],data["acid_a_psi"])
           
-        phipsi_append(pdb_number,b,data["acid_b_phi"],data["acid_b_psi"])
+        phipsi_append(3,pdb_number,b,data["acid_b_phi"],data["acid_b_psi"])
         
         if tail:
-          phipsi_append(pdb_number,c,data["acid_c_phi"],'nan')
+          phipsi_append(3,pdb_number,c,data["acid_c_phi"],'nan')
         else:
-          phipsi_append(pdb_number,c,data["acid_c_phi"],data["acid_c_psi"])
+          phipsi_append(3,pdb_number,c,data["acid_c_phi"],data["acid_c_psi"])
     
     elif skip_sequences==2:
-        phipsi_append(pdb_number,b,data["acid_b_phi"],data["acid_b_psi"])
+        phipsi_append(3,pdb_number,b,data["acid_b_phi"],data["acid_b_psi"])
         phipsi_append(pdb_number,c,data["acid_c_phi"],'nan')
     
     elif skip_sequences==1:
-        phipsi_append(pdb_number,c,data["acid_c_phi"],'nan')
+        phipsi_append(3,pdb_number,c,data["acid_c_phi"],'nan')
     
 
 def build_model3(pdb_number):
@@ -344,13 +368,13 @@ def phipsi_replace3(old_model_number, new_model_number, a, a_phi, a_psi, b, b_ph
         raise BaseException("phipsi_replace3 requires a sequence offset >= 0.", sequence_offset, "was given")
         exit()
     else:
-        print "seq offset:", sequence_offset, "old model:", old_model_number, "new model:", new_model_number
+        print("seq offset:", sequence_offset, "old model:", old_model_number, "new model:", new_model_number)
 
-    PHIPSI_IN = phipsi_file_name(old_model_number)
+    PHIPSI_IN = phipsi_file_name(3,old_model_number)
     # clone off the file in case of updating itself
-    shutil.copy(PHIPSI,'temp.txt')
+    shutil.copy(PHIPSI_IN,'temp.txt')
     PHIPSI_IN = 'temp.txt'
-    PHIPSI_OUT = phipsi_file_name(new_model_number)
+    PHIPSI_OUT = phipsi_file_name(3,new_model_number)
     
     lines = [line.strip() for line in open(PHIPSI_IN)]
     numlines = len(lines)
@@ -396,7 +420,7 @@ def replace_sequence3(old_model_number, new_model_number, a,b,c, sequence_offset
     
     sequence = [a,b,c]
     #print sequence
-    print "finding sequence matching:", ''.join(sequence)
+    print("finding sequence matching:", ''.join(sequence))
     
     data = None
     i = 0
@@ -421,10 +445,10 @@ def randomize_model3(old_model_number, new_model_number):
     replace_sequence3(old_model_number, new_model_number, INPUT_SEQUENCE[random_offset], INPUT_SEQUENCE[random_offset+1], INPUT_SEQUENCE[random_offset+2], random_offset)
 
 #global utility function to build/score pdb file
-def build_score_pdb_model(pdb_number):
+def build_score_pdb_model(seq_length,pdb_number):
     '''send phipsi to lipa to generated pdb, score with dfire, return score (most negative == best)'''
-    PDB_OUT = phipsi_file_name(pdb_number)
-    PDB_OUT_LIPA = pdb_lipa_name(pdb_number)
+    PDB_OUT = phipsi_file_name(seq_length,pdb_number)
+    PDB_OUT_LIPA = pdb_lipa_name(seq_length,pdb_number)
     
     lipa_convert = os.system("./lipa " + PDB_OUT + " -o " + PDB_OUT_LIPA)
     
@@ -438,8 +462,8 @@ def build_score_pdb_model(pdb_number):
   
       score = float(dfire_output_split_nums[1])
 
-    #print "pdb:", PDB_OUT_LIPA, "dfire_score:", float(dfire_output_split_nums[1])
-    print "pdb:", pdb_number, "score:", float(score)
+    #print("pdb:", PDB_OUT_LIPA, "dfire_score:", float(dfire_output_split_nums[1])
+    print("pdb:", pdb_number, "score:", float(score))
 
     return score
 
@@ -447,29 +471,34 @@ def build_score_pdb_model(pdb_number):
 def sigmoid_temperature(k):
   return -5000/(1 + math.exp(-k/200)) + 5000
 
-def linear_temparature(k):
+def linear_temperature(k):
   return (-2500/1000)*k + 2500
   
 #init and run hill climbing, print out results
 def main(temperature=sigmoid_temperature):
 
     #cleanup
-    if not os.path.exists(TMP_DIR):
+    if not os.path.exists(TARGET_DIR+TARGET_NAME):
         print("Making temp directory")
-        os.mkdir(TMP_DIR)
+        os.mkdir(TARGET_DIR+TARGET_NAME)
     else:
         print("Clearing temp directory")
-        for root,dirs,files in os.walk(TMP_DIR,topdown=False):
-            for name in files:
-                os.remove(os.path.join(root,name))
+        for root,dirs,files in os.walk(TARGET_DIR+TARGET_NAME,topdown=False):
+            for name in dirs:
+                shutil.rmtree(os.path.join(root,name))
+
+    os.mkdir(TARGET_DIR+TARGET_NAME+"/phipsi")
+    os.mkdir(TARGET_DIR+TARGET_NAME+"/lipa")
+    os.mkdir(TARGET_DIR+TARGET_NAME+"/pdbs")
 
     #build initial random model
-    build_model3(0)
+    build_model9(0)
     
     best_dfire_score = 1e6 #best is lowest
     best_dfire_number = -1
 
     old_model_number = 0
+    num_pdbs = 1
 
     best_model = old_model_number
     best_score = best_dfire_score
@@ -481,21 +510,26 @@ def main(temperature=sigmoid_temperature):
         # Create neighbor
         randomize_model9(best_model, k)
         # Calculate score. Lower is better
-        neighbor_score = build_score_pdb_model(k)
+        neighbor_score = build_score_pdb_model(9,k)
         # Calculate score difference
         score_diff = neighbor_score - best_score
         # If score_diff is above 0, chance it
         if score_diff > 0:
             # Grab the probability of accepting a bad neighbor
             prob_to_accept = math.exp(-100*score_diff/T)
-            print "probability to accept:", prob_to_accept
+            print("probability to accept:", prob_to_accept)
             # Reject if roll is above probability
             if prob_to_accept < random.random():
                 continue
-            print "accepted neighbor anyway"
+            print("accepted neighbor anyway")
         best_model = k
         best_dfire = k
         best_score = neighbor_score
+
+        src_name = pdb_lipa_name(9,best_model)
+        dest_name = pdb_save_name(num_pdbs)
+        shutil.copy(src_name,dest_name)
+        num_pdbs += 1
 
     for k in range(1,NUMBER_SIMULATIONS+1):
         # Grab temperature
@@ -503,31 +537,44 @@ def main(temperature=sigmoid_temperature):
         # Create neighbor
         randomize_model3(best_model, k)
         # Calculate score. Lower is better
-        neighbor_score = build_score_pdb_model(k)
+        neighbor_score = build_score_pdb_model(3,k)
         # Calculate score difference
         score_diff = neighbor_score - best_score
         # If score_diff is above 0, chance it
         if score_diff > 0:
             # Grab the probability of accepting a bad neighbor
             prob_to_accept = math.exp(-100*score_diff/T)
-            print "probability to accept:", prob_to_accept
+            print("probability to accept:", prob_to_accept)
             # Reject if roll is above probability
             if prob_to_accept < random.random():
                 continue
-            print "accepted neighbor anyway"
+            print("accepted neighbor anyway")
         best_model = k
         best_dfire = k
         best_score = neighbor_score
 
-    print "best model found:", best_model, "score:", best_score
+        src_name = pdb_lipa_name(3,best_model)
+        dest_name = pdb_save_name(num_pdbs)
+        shutil.copy(src_name,dest_name)
+        num_pdbs += 1
 
-def run(target_name,input_sequence,simulations=1000,temperature='sigmoid'):
-  if target_name:
-    TARGET_NAME = target_name
-  if input_sequence:
-    INPUT_SEQUENCE = input_sequence
+    print("best model found:", best_model, "score:", best_score)
+
+def run(target,sequence=INPUT_SEQUENCE,simulations=1000,temperature='sigmoid'):
+  global TARGET_NAME
+  global INPUT_SEQUENCE
+  global NUMBER_SIMULATIONS
+
+  print("Runnig Simulated Annleaing for target:",target)
+  if target:
+    TARGET_NAME = target
+
+  if sequence:
+    INPUT_SEQUENCE = sequence
+
   if simulations:
     NUMBER_SIMULATION = simulations
+
   if temperature in ['sigmoid','linear']:
     if temperature == 'sigmoide':
       main(sigmoid_temperature)
@@ -535,6 +582,21 @@ def run(target_name,input_sequence,simulations=1000,temperature='sigmoid'):
       main(linear_temperature)
   else:
     main(sigmoid_temperature)
+
+def runargs(args):
+    target = TARGET_NAME
+    sequence = INPUT_SEQUENCE
+    simulations = NUMBER_SIMULATIONS
+    temperature = 'sigmoid'
+    if args[0]:
+        target = args[0]
+    if args[1]:
+        sequence = args[1]
+    if args[2]:
+        simulations = args[2]
+    if args[3]:
+        temperature = args[3]
+    run(target,sequence,simulations,temperature)
     
 if __name__ == "__main__":
     main()
