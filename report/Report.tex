@@ -35,9 +35,13 @@
 \maketitle
 
 \section{Abstract}
-We model a CASP-10 template free target using ab initio modeling.  First, we construct a database of phi-psi angles from known PDB files.  Next, we build an initial model by selecting same/similar protein sequences from the database.  Then, we utilize simulated annealing and an external energy function (dDFIRE) to improve our model iteratively.  Ultimately, we visualize the formation of our new protein model, some statistics generated during our modeling process, and discuss further improvements.
+This project is to develop a simple prototype of fragment assembly template-free modeling system. First, we convert PDB into residue-torsion pairs and use sliding window along to get lists for building fragment database created by Rosetta. Next, we can randomly select from list of matches. After initialization, we use simulated annealing to judge if the fragment’s neighbor can be accepted according to consensus scoring. Finally, we can get millions of decoys that are scored and sorted for evaluation. Ultimately, we create a movie of the top-scoring protein.
 
 \section{Introduction}
+
+Template free modeling is an important technique in modern bioinformatics since not all proteins have templates. First, we begin with PDB sequences converting into torsion angles using rama/lipa. By sliding window algorithm, we can get millions of fragments to construct the database. Then for each segment do a query for a complete match in the database.\\\\
+We use simulated annealing to score, when the current solution’s neighbor is better, accepted. If not, we select it with a probability based on the current temperature. We modified consensus scoring for model acceptance. If the score improves for 2/3 through the scoring techniques D-fire energy function, accepted. Otherwise, do normalization and sum to be accepted upon temperature based probability.\\\\
+For our project, we implemented basic homology modeling in python 3.3, using a number of external tools like D-fire, Rosetta, TM-score presenting a final visualized model.
 
 
 \subsection{Pipeline}
