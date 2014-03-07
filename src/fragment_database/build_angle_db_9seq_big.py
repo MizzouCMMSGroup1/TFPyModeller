@@ -70,7 +70,8 @@ def main():
         file = f.split('.')
         file_name = file[0]
         parse_rama_file(file_name+".txt")
-        
+    
+    c.execute('CREATE INDEX seq_index ON SEQUENCES(seq)')
     conn.commit()
     conn.close()
 
