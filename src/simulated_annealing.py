@@ -1,15 +1,20 @@
 '''current test sequence'''
 INPUT_SEQUENCE = 'MKFLKFSLLTAVLLSVVFAFSSCGDDDDTGYLPPSQAIQDALKKLYPNATAIKWEQKGVYYVADCQADGREKEVWFDANANWLMTETELNSINNLPPAVLTAFMESSYNNWVVDDVVILEYPNEPSTEFVVTVEQGKKVDLYFSEGGGLLHEKDVTNGDDTHWPRV'
 
+INPUT_SEQUENCE = 'MKFLKFSLLTAVLLSVVFAFSSCGDDDDTGYLPP'
+
 '''fragment database'''
-THREE_SEQUENCE_DATABASE_NAME = 'fragment_database/300PDB_three_sequences.db'
-NINE_SEQUENCE_DATABASE_NAME = 'fragment_database/300PDB_nine_sequences.db'
+THREE_SEQUENCE_DATABASE_NAME = 'fragment_database/17K_PDB_three_sequences.db'
+NINE_SEQUENCE_DATABASE_NAME = 'fragment_database/17K_PDB_nine_sequences.db'
 
 '''store working files in temp_out'''
 TMP_DIR = "temp_out/"
 
+'''name for files'''
+TARGET_NAME = "T9999"
+
 '''store working files in temp_out subdirectory/start of each file'''
-PDB_PREPEND_NAME = TMP_DIR+"simulation_"
+PDB_PREPEND_NAME = TMP_DIR+TARGET_NAME+"_simulation_"
 
 '''number of hill climbing simulations to run'''
 NUMBER_SIMULATIONS = 1000
@@ -19,6 +24,8 @@ import os
 import subprocess
 import random
 import math
+import copy
+import shutil
 
 #blosum62
 from blosum62 import Blosum62
@@ -61,19 +68,35 @@ Replace9 Functions
 def append_sequence9(pdb_number, a,b,c, d,e,f, g,h,i, skip_sequences=0, head=False, tail=False):
     '''find sequence from database for each chunk of three residues, add to phipsi file'''
     
-    sequence = a+b+c+d+e+f+g+h+i
+    base_sequence = [a,b,c,d,e,f,g,h,i]
+    sequence = copy.copy(base_sequence)
     #print sequence
     print "finding sequence matching:", ''.join(sequence)
-    
+
     data = None
     i = 0
-    
+    j = 0
+
     while data == None:
-      query = ''.join(sequence)
-      cursor9.execute("SELECT * FROM sequences WHERE seq= '%s' ORDER BY RANDOM() LIMIT 1;" % query)
-      data = cursor9.fetchone()
-      sequence[i%9] = bmatrix[sequence[i%9]][0][0]
-      i+=1
+        query = ''.join(sequence)
+        cursor9.execute("SELECT * FROM sequences WHERE seq = '%s' ORDER BY RANDOM() LIMIT 1;" % (query))
+        data = cursor9.fetchone()
+        if data == None:
+          sequence = copy.copy(base_sequence)
+          sequence[i%9] = bmatrix[base_sequence[i%9]][0][0]
+          if i%9 == 0 and i > 0:
+            j = j+1
+            base_sequence[j%9] = bmatrix[base_sequence[j%9]][0][0]
+          print "no match found. using",''.join(sequence),"instead"
+          i += 1
+        if i > 17: # after three cycles we're too far away from the original sequence
+          if skip_sequences < 3:
+            append_sequence3(pdb_number, a,b,c, skip_sequences=skip_sequences, head=head)
+          if skip_sequences < 6:
+            append_sequence3(pdb_number, d,e,f, skip_sequences=skip_sequences-3)
+          if skip_sequences < 9:
+            append_sequence3(pdb_number, g,h,i, skip_sequences=skip_sequence-6,tail=tail)
+          return
 
     #using modular arithmetic to only update the last few residues when needed
 
@@ -109,6 +132,7 @@ def build_model9(pdb_number):
 
     sequence_length = len(INPUT_SEQUENCE)
 
+    i = 0
     append_sequence9(pdb_number, INPUT_SEQUENCE[i], INPUT_SEQUENCE[i+1], INPUT_SEQUENCE[i+2],
                                  INPUT_SEQUENCE[i+3], INPUT_SEQUENCE[i+4], INPUT_SEQUENCE[i+5],
                                  INPUT_SEQUENCE[i+6], INPUT_SEQUENCE[i+7], INPUT_SEQUENCE[i+8],
@@ -143,6 +167,9 @@ def phipsi_replace9(old_model_number, new_model_number, a, a_phi, a_psi, b, b_ph
         print "seq offset:", sequence_offset, "old model:", old_model_number, "new model:", new_model_number
 
     PHIPSI_IN = phipsi_file_name(old_model_number)
+    # clone off the file in case of updating itself
+    shutil.copy(PHIPSI,'temp.txt')
+    PHIPSI_IN = 'temp.txt'
     PHIPSI_OUT = phipsi_file_name(new_model_number)
     
     lines = [line.strip() for line in open(PHIPSI_IN)]
@@ -190,6 +217,8 @@ def phipsi_replace9(old_model_number, new_model_number, a, a_phi, a_psi, b, b_ph
         i+=1
     
     out_file.close()
+    
+    os.remove(PHIPSI_IN)
 
 
 def replace_sequence9(old_model_number, new_model_number, a,b,c, d,e,f, g,h,i, sequence_offset=-1):
@@ -198,24 +227,33 @@ def replace_sequence9(old_model_number, new_model_number, a,b,c, d,e,f, g,h,i, s
         raise BaseException("replace_sequence9 requires a sequence offset >= 0.", sequence_offset, "was given")
         exit()
     
-    sequence = [a,b,c,d,e,f,g,h,i]
+    base_sequence = [a,b,c,d,e,f,g,h,i]
+    sequence = copy.copy(base_sequence)
     #print sequence
     print "finding sequence matching:", ''.join(sequence)
-    #sequence = a+b+c+d+e+f+g+h+i
-    #print sequence
 
     data = None
-    i = 0
+    j = 0
+    k = 0
 
     while data == None:
         query = ''.join(sequence)
-        cursor9.execute("SELECT * FROM sequences WHERE seq = '%s' ORDER BY RANDOM() LIMIT 1;", % (query))
+        cursor9.execute("SELECT * FROM sequences WHERE seq = '%s' ORDER BY RANDOM() LIMIT 1;" % (query))
         data = cursor9.fetchone()
-        sequence[i%9] = bmatrix[sequence[i%9][0][0]]
-        i += 1
-    
-    cursor.execute("SELECT * FROM sequences WHERE seq = '%s' ORDER BY RANDOM() LIMIT 1;" % sequence)
-    data = cursor.fetchone()
+        if data == None:
+          sequence = copy.copy(base_sequence)
+          sequence[j%9] = bmatrix[base_sequence[j%9]][0][0]
+          if j%9 == 0 and j > 0:
+            k = k+1
+            base_sequence[k%9] = bmatrix[base_sequence[k%9]][0][0]
+          print "no match found. using",''.join(sequence),"instead"
+          j += 1
+        if j > 17: # after three cycles we're too far away from the original sequence
+          print "reverting to sequence length 3"
+          replace_sequence3(old_model_number, new_model_number, a,b,c, sequence_offset)
+          replace_sequence3(new_model_number, new_model_number, d,e,f, sequence_offset+3)
+          replace_sequence3(new_model_number, new_model_number, g,h,i, sequence_offset+6)
+          return
 
     phipsi_replace9(old_model_number, new_model_number,a,data["acid_a_phi"],data["acid_a_psi"],
                                                       b,data["acid_b_phi"],data["acid_b_psi"],
@@ -309,6 +347,9 @@ def phipsi_replace3(old_model_number, new_model_number, a, a_phi, a_psi, b, b_ph
         print "seq offset:", sequence_offset, "old model:", old_model_number, "new model:", new_model_number
 
     PHIPSI_IN = phipsi_file_name(old_model_number)
+    # clone off the file in case of updating itself
+    shutil.copy(PHIPSI,'temp.txt')
+    PHIPSI_IN = 'temp.txt'
     PHIPSI_OUT = phipsi_file_name(new_model_number)
     
     lines = [line.strip() for line in open(PHIPSI_IN)]
@@ -343,6 +384,8 @@ def phipsi_replace3(old_model_number, new_model_number, a, a_phi, a_psi, b, b_ph
         i+=1
     
     out_file.close()
+    
+    os.remove(PHIPSI_IN)
 
 
 def replace_sequence3(old_model_number, new_model_number, a,b,c, sequence_offset=-1):
@@ -401,11 +444,14 @@ def build_score_pdb_model(pdb_number):
     return score
 
 #temperature calculator. non-linear decrease
-def temperature(k):
-    return -5000/(1 + math.exp(-k/200)) + 5000
+def sigmoid_temperature(k):
+  return -5000/(1 + math.exp(-k/200)) + 5000
 
+def linear_temparature(k):
+  return (-2500/1000)*k + 2500
+  
 #init and run hill climbing, print out results
-def main():
+def main(temperature=sigmoid_temperature):
 
     #cleanup
     if not os.path.exists(TMP_DIR):
@@ -416,16 +462,9 @@ def main():
         for root,dirs,files in os.walk(TMP_DIR,topdown=False):
             for name in files:
                 os.remove(os.path.join(root,name))
-    '''
-    #cleanup
-    for i in range(1,NUMBER_SIMULATIONS+1):
-        if os.path.exists(phipsi_file_name(i)): os.rm()
-        os.system("rm " + phipsi_file_name(i))
-        os.system("rm " + pdb_lipa_name(i))
-    '''
 
     #build initial random model
-    build_model9(0)
+    build_model3(0)
     
     best_dfire_score = 1e6 #best is lowest
     best_dfire_number = -1
@@ -482,6 +521,21 @@ def main():
 
     print "best model found:", best_model, "score:", best_score
 
+def run(target_name,input_sequence,simulations=1000,temperature='sigmoid'):
+  if target_name:
+    TARGET_NAME = target_name
+  if input_sequence:
+    INPUT_SEQUENCE = input_sequence
+  if simulations:
+    NUMBER_SIMULATION = simulations
+  if temperature in ['sigmoid','linear']:
+    if temperature == 'sigmoide':
+      main(sigmoid_temperature)
+    if temperature == 'linear':
+      main(linear_temperature)
+  else:
+    main(sigmoid_temperature)
+    
 if __name__ == "__main__":
     main()
 
