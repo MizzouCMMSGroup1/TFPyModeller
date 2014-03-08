@@ -515,6 +515,7 @@ def main(temperature=sigmoid_temperature):
         score_diff = neighbor_score - best_score
         # If score_diff is above 0, chance it
         if score_diff > 0:
+            score_diff = score_diff if score_diff < 5*T else 5*T
             # Grab the probability of accepting a bad neighbor
             prob_to_accept = math.exp(-100*score_diff/T)
             print("probability to accept:", prob_to_accept)
@@ -542,6 +543,7 @@ def main(temperature=sigmoid_temperature):
         score_diff = neighbor_score - best_score
         # If score_diff is above 0, chance it
         if score_diff > 0:
+            score_diff = score_diff if score_diff < 5*T else 5*T
             # Grab the probability of accepting a bad neighbor
             prob_to_accept = math.exp(-100*score_diff/T)
             print("probability to accept:", prob_to_accept)
