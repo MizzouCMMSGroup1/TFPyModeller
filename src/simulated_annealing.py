@@ -13,7 +13,7 @@ TARGET_DIR = "targets/"
 '''name for files'''
 TARGET_NAME = "T9999"
 
-'''number of hill climbing simulations to run'''
+'''number of simulated annealing simulations to run'''
 NUMBER_SIMULATIONS = 1000
 
 #some imports we need
@@ -66,7 +66,7 @@ Replace9 Functions
 '''
 
 def append_sequence9(pdb_number, a,b,c, d,e,f, g,h,i, skip_sequences=0, head=False, tail=False):
-    '''find sequence from database for each chunk of three residues, add to phipsi file'''
+    '''find sequence from database for each chunk of nine residues, add to phipsi file'''
     
     base_sequence = [a,b,c,d,e,f,g,h,i]
     sequence = copy.copy(base_sequence)
@@ -136,7 +136,7 @@ def append_sequence9(pdb_number, a,b,c, d,e,f, g,h,i, skip_sequences=0, head=Fal
     
 
 def build_model9(pdb_number):
-    '''build initial model for each chunk of three residues'''
+    '''build initial model for each chunk of nine residues'''
 
     sequence_length = len(INPUT_SEQUENCE)
 
@@ -292,7 +292,7 @@ def replace_sequence9(old_model_number, new_model_number, a,b,c, d,e,f, g,h,i, s
 
 
 def randomize_model9(old_model_number, new_model_number):
-    '''pick three residues at random and replace them'''
+    '''pick nine residues at random and replace them'''
 
     sequence_length = len(INPUT_SEQUENCE)
     
@@ -567,7 +567,7 @@ def run(target,sequence=INPUT_SEQUENCE,simulations=1000,temperature='sigmoid'):
   global INPUT_SEQUENCE
   global NUMBER_SIMULATIONS
 
-  print("Runnig Simulated Annleaing for target:",target)
+  print("Running Simulated Annealing for target:",target)
   if target:
     TARGET_NAME = target
 
@@ -578,7 +578,7 @@ def run(target,sequence=INPUT_SEQUENCE,simulations=1000,temperature='sigmoid'):
     NUMBER_SIMULATION = simulations
 
   if temperature in ['sigmoid','linear']:
-    if temperature == 'sigmoide':
+    if temperature == 'sigmoid':
       main(sigmoid_temperature)
     if temperature == 'linear':
       main(linear_temperature)
