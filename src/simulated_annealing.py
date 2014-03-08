@@ -14,7 +14,7 @@ TARGET_DIR = "targets/"
 TARGET_NAME = "T9999"
 
 '''number of simulated annealing simulations to run'''
-NUMBER_SIMULATIONS = 1000
+NUMBER_SIMULATIONS = 10
 
 #some imports we need
 import os
@@ -531,6 +531,10 @@ def main(temperature=sigmoid_temperature):
         dest_name = pdb_save_name(num_pdbs)
         shutil.copy(src_name,dest_name)
         num_pdbs += 1
+
+    #convert best nine model to three to start model refinement
+    os.system("cp " + phipsi_file_name(9,best_model) + " " + phipsi_file_name(3,0))
+    best_model = 0
 
     for k in range(1,NUMBER_SIMULATIONS+1):
         # Grab temperature
