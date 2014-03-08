@@ -51,6 +51,9 @@ def pdb_lipa_name(seq_length,pdb_number):
 def pdb_save_name(pdb_number):
     return TARGET_DIR+TARGET_NAME+"/pdbs/"+ "sequence%d" % (pdb_number) +".pdb"
 
+def stats_save_name():
+    return TARGET_DIR+TARGET_NAME+"/stats" +".txt"
+
 #code for initialization of protein randomly from sequence database
 def phipsi_append(seq_length,phipsi_number, acid, phi, psi):
     '''add data to phipsi file'''
@@ -59,6 +62,15 @@ def phipsi_append(seq_length,phipsi_number, acid, phi, psi):
     
     file = open(PHIPSI_OUT, "a")
     file.write("{0} {1:>6} {2:>6}\n".format(acid, phi, psi))
+    file.close()
+
+def stats_append(sequence_count,trial_number,score):
+    '''add data to stats file'''
+    
+    STATS_OUT = stats_save_name()
+    
+    file = open(STATS_OUT, "a")
+    file.write("{0}, {1}, {2}\n".format(sequence_count, trial_number, score))
     file.close()
 
 '''
@@ -511,6 +523,10 @@ def main(temperature=sigmoid_temperature):
         randomize_model9(best_model, k)
         # Calculate score. Lower is better
         neighbor_score = build_score_pdb_model(9,k)
+        
+        #save stats
+        stats_append(9,k,neighbor_score)
+        
         # Calculate score difference
         score_diff = neighbor_score - best_score
         # If score_diff is above 0, chance it
@@ -532,6 +548,9 @@ def main(temperature=sigmoid_temperature):
         shutil.copy(src_name,dest_name)
         num_pdbs += 1
 
+    #save best
+    stats_append(9000,best_model,neighbor_score)
+    
     #convert best nine model to three to start model refinement
     os.system("cp " + phipsi_file_name(9,best_model) + " " + phipsi_file_name(3,0))
     best_model = 0
@@ -543,6 +562,10 @@ def main(temperature=sigmoid_temperature):
         randomize_model3(best_model, k)
         # Calculate score. Lower is better
         neighbor_score = build_score_pdb_model(3,k)
+        
+        #save stats
+        stats_append(3,k,neighbor_score)
+        
         # Calculate score difference
         score_diff = neighbor_score - best_score
         # If score_diff is above 0, chance it
@@ -564,6 +587,8 @@ def main(temperature=sigmoid_temperature):
         shutil.copy(src_name,dest_name)
         num_pdbs += 1
 
+    #save best
+    stats_append(3000,best_model,neighbor_score)
     print("best model found:", best_model, "score:", best_score)
 
 def run(target,sequence=INPUT_SEQUENCE,simulations=1000,temperature='sigmoid'):
