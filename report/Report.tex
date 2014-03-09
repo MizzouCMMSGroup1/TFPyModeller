@@ -15,6 +15,7 @@
 \usepackage{algorithm,algpseudocode}
 \usepackage[margin=1.5in]{geometry}
 \usepackage{listings}
+\usepackage{program}
 \lstset{language=Python} 
 
 \usepackage{listings}
@@ -45,13 +46,7 @@ For our project, we implemented basic homology modeling in python 3.3, using a n
 
 
 \subsection{Pipeline}
-\begin{figure}[H]
-\begin{center}
-\includegraphics[width=\textwidth]{workflow}
-\caption{An overview of the TBPy pipeline}
-\label{Fig:blosum}
-\end{center}
-\end{figure}
+
 
 \section{Target goal}
 
@@ -59,12 +54,44 @@ For our project, we implemented basic homology modeling in python 3.3, using a n
 
 \section{Fragment database}
 
+First, we selected a set of 17,000 PDB database with sequence lengths of 100-150 residues.  Then, for each PDB file, we split it into a collection of (residue, phi angle, psi angle) inputs.  We discard the first and last residue, since they only have one valid angle.  Next, we go through each PDB file sequentially for each three residues:
+\begin{program}
+
+  \FOR i:=1 \TO (length(PDB)-1)-3 \STEP 1 \DO
+     	addToFragmentTrimersDatabase(a, phi_a, psi_a, b, phi_b, psi_b, c, phi_c, psi_c)\\\\
+\END
+\end{program}
+
+Then, we repeat the process for each nine residues:
+
+\begin{program}
+  \FOR i:=1 \TO (length(PDB)-1)-9 \STEP 1 \DO
+	addToFragmentNinemersDatabase(a, phi_a, psi_a, b, phi_b, psi_b, c, phi_c, psi_c, ...)\\\\
+\END
+\end{program}
+
+Finally, we create an index for each sequence in our databases, in order to speed up future lookups.  This produces a database of approximately 1.7 million indexes which can be searched very quickly and of a reasonable size (3 Seq: ~150MB, 9 Seq: ~500MB).
+
 \section{Simulated annealing}
+
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=\textwidth]{sa}
+\label{Fig:blosum}
+\end{center}
+\end{figure}
+
+Next, we begin basic simulated annealing.  First, we randomly initialize our protein fragment by selecting same/similar sequences from the database.  Then, we create a PDB from our collection of residues and phi/psi angles.  Next, we score our protein model using an objective function (d-DFIRE).  We then accept or keep the score as follows (stuff about simulated annealing here).
+
 
 \subsection{d-DFIRE score}
 
+(need a section about dDFIRE
+
 \subsection{BLOSUM62 selection}
 
+We use BLOSUM to generate candidate similarity for each step.
 
 \section{Results/statistics}
 
@@ -98,9 +125,7 @@ After we obtain our final target PDB file, we use Jmol to visualize it. At the s
 \begin{center}
     \begin{tabular}{ | l | l | l | p{2cm} |}
     \hline
-      & Group1 & MULTICOM & MuFold \\ \hline
-    TM-Score & 0.9971 & 0.9072 & 0.1985 \\ \hline
-    RMSD & 0.23 & 1.666 & 14.978 \\
+
     \hline
     \end{tabular}
 \end{center}
