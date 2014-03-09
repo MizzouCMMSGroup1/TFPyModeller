@@ -58,6 +58,7 @@ First, we selected a set of 17,000 PDB database with sequence lengths of 100-150
 \begin{program}
 
   \FOR i:=1 \TO (length(PDB)-1)-3 \STEP 1 \DO
+	a := PDB[i], b:= PDB[i+1], c:= PDB[i+2]
      	addToFragmentTrimersDatabase(a, phi_a, psi_a, b, phi_b, psi_b, c, phi_c, psi_c)\\\\
 \END
 \end{program}
@@ -66,24 +67,38 @@ Then, we repeat the process for each nine residues:
 
 \begin{program}
   \FOR i:=1 \TO (length(PDB)-1)-9 \STEP 1 \DO
-	addToFragmentNinemersDatabase(a, phi_a, psi_a, b, phi_b, psi_b, c, phi_c, psi_c, ...)\\\\
+	a := PDB[i], b:= PDB[i+1], c:= PDB[i+2],  \dotso
+	addToFragmentNinemersDatabase(a, phi_a, psi_a, b, phi_b, psi_b, c, phi_c, psi_c, \dotso)\\\\
 \END
 \end{program}
 
-Finally, we create an index for each sequence in our databases, in order to speed up future lookups.  This produces a database of approximately 1.7 million indexes which can be searched very quickly and of a reasonable size (3 Seq: ~150MB, 9 Seq: ~500MB).
+Finally, we create an index for each sequence in our databases, in order to speed up future lookups.  This produces a database of approximately 1.7 million indexes of a reasonable size (Trimer: ~150MB, Ninemer: ~500MB) which can be searched very quickly.
 
 \section{Simulated annealing}
 
 
+
+After building fragments database, we are going to build a model for our target with the database. The algorithm we use in the project is Simulated Annealing. SA is a generic probabilistic metaheuristic for the global optimization problem of locating a good approximation to the global optimum of a given function in a large search space. It is often used when the search space is discrete. For our project, Simulated Annealing algorithm is quite efficient. Rather than hill climbing, SA can allow a bad fragment replacement in high temperature, which may lead to a better overall model structure. \\\\
+In each cycle, SA grabs the current solution’s neighbor. If the neighbor’s score is better, use
+the neighbor as the current solution. If it’s not, select it with a probability based on the current temperature.\\\\
+     Also cool schedule is an important factor in the SA algorithm. A good cool schedule can efficiently and quickly help us find the optimal solution. In our project, we adopted the sigmoid function. Of course, we made modification on the function to make it fit our project. So the final cool schedule is either sigmoid or linear:\\\\
+\begin{equation*}
+      T_s(k) =  -5000/(1+ exp(-k/200))+5000
+    \end{equation*}
+\begin{equation*}
+      T_l(k) =  (-2500/1000)*k + 2500
+    \end{equation*}
+
+. We believe allowing a “bad” fragment replacement can make great contributions to the final models in the beginning. The cool schedule will stay in high temperature for a long time to make it happen. Besides, temperature will stays cold for a period in the end because we have already built a quite “good” structure for majority of fragments and we want keep it “good”. By this function, we can optimize our search and help us find good structures for targets.
+
+
+\section{Simulated Annealing psuedocode}
 \begin{figure}[H]
 \begin{center}
 \includegraphics[width=\textwidth]{sa}
 \label{Fig:blosum}
 \end{center}
 \end{figure}
-
-Next, we begin basic simulated annealing.  First, we randomly initialize our protein fragment by selecting same/similar sequences from the database.  Then, we create a PDB from our collection of residues and phi/psi angles.  Next, we score our protein model using an objective function (d-DFIRE).  We then accept or keep the score as follows (stuff about simulated annealing here).
-
 
 \subsection{d-DFIRE score}
 
