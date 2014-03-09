@@ -1,0 +1,15 @@
+In order to more easily assemble our workflow we break it into a simple pipeline. Doing this allows for quick iteration on multiple fronts without the fear of breaking the model as a whole.
+
+The first task involves building robust and well-indexed fragment databases for the three and nine length sequences. Once this is complete we are free to iterate over the simulated annealing algorithm itself.
+
+Once the databases are built we create the tools necessary to initialize the candidate, choose its neighbor and score the neighbor, all of which are independent of the simulated annealing algorithm itself.
+
+Initialization is less important in simulated annealing than most due to its stochastic nature, so a close approximation using fragments from the database are sufficient to build starting point.
+
+Neighbor selection is more important, and fragment selection is a key component separated from the core code, as is described in our section on neighbor using Blosum62.
+
+Scoring features in a similar manner, as the neighbor must be converted to a PDB file, scored with an external system, and then have its score returned and compared. In our current model D-fire energy is used to score the model.
+
+Finally, multiple cooling solutions may be used, so allowing the user a choice using functional methods are preferred. We currently provide both linear and inverse-sigmoid cooling functions, with a temperature ranging from 2500 to 0 over 1000 iterations.
+
+Creating a system in this way leads to easy parallelization, as each decoy can be generated independent of the others. This allows for rapid decoy creation and comparison with no human component necessary beyond initial input.
