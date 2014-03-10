@@ -101,7 +101,7 @@ Then, we repeat the process for each nine residues:
 \END
 \end{program}
 
-Finally, we create an index for each sequence in our databases, in order to speed up future lookups.  This produces a database of approximately 1.7 million indexes of a reasonable size (Trimer: ~150MB, Ninemer: ~500MB) which can be searched very quickly.
+Finally, we create an index for each sequence in our databases, in order to speed up future lookups.  This produces a database of approximately 1.7 million sequences of a reasonable size (Trimer: ~150MB, Ninemer: ~500MB) which can be searched very quickly.
 
 \section{Simulated annealing}
 
@@ -135,7 +135,11 @@ the neighbor as the current solution. If it’s not, select it with a probabilit
 
 \subsection{BLOSUM62 selection}
 
-Neighbor selection is an important part of greedy and semi-greedy algorithms, as changes which are too large can disrupt the process of finding global minima and maxima. In order to generate neighbors which are close to the current sequence we use a two-fold approach: find a complete match; if a match is not found, find a match for a very similar sequence. The first approach is easy to understand, but the second requires domain knowledge of amino acids, as some acids are more similar than others.\\
+Neighbor selection is an important part of greedy and semi-greedy algorithms, as changes which are too large can disrupt the process of finding global minima and maxima. In order to generate neighbors which are close to the current sequence we use a two-fold approach: find a complete match; if a match is not found, find a match for a very similar sequence. The first approach is easy to understand, but the second requires domain knowledge of amino acids, as some acids are more similar than others.
+
+\begin{equation*}
+S_{ij}= \left( \frac{1}{\lambda} \right)\log{\left( \frac{p_{ij}}{q_i * q_j} \right)}
+    \end{equation*}
 
 The Blosum62 matrix is a pair-wise "distance" matrix of sorts which can be used to determine the similarity of two amino acids. This matrix is commonly used to determine sequence similarity for alignment purposes, but can also be used as a generative model. By finding similar amino acids to those in the current fragment sequence, we can generate multiple sequences which are very similar in terms of "distance," allowing us to expand our search criteria on limited databases.
 
