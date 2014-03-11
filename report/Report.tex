@@ -40,7 +40,7 @@ Our goal is to develop a simple prototype of fragment assembly template-free mod
 
 \section{Introduction}
 
-Template free modeling is an important technique in modern bioinformatics since not all proteins have templates. First, we begin with PDB sequences converting into torsion angles using third party tools RAMA/LIPA (part of CRONKITE). Using a sliding window algorithm, we can add millions of fragments to our database. Then, for each segment, we can do a query for a match/similar protien in the database.\\\\
+Template free modeling is an important technique in modern bioinformatics since not all proteins have templates. First, we begin with PDB sequences converting into torsion angles using third party tools RAMA/LIPA (part of CRONKITE). Using a sliding window algorithm, we can add millions of fragments to our database. Then, for each segment, we can do a query for a match/similar protein in the database.\\\\
 We use simulated annealing to score, when the current solution’s neighbor is better, accepted. If not, we select it with a probability based on the current temperature. For our project, we implemented a basic homology modeling pipeline in python, using a number of external tools like DFIRE, PyMOL and TM-score to build/present a final visualized model.
 
 
@@ -78,7 +78,7 @@ Creating a system in this way leads to easy parallelization, as each decoy can b
 
 \section{CASP Target goal}
 
-We selected the following targets from the CASP database to build a model for: T644 (166 residues), T645 (97 residues), and T-646 (537 residues).  This allows us a combination of small, medium, and large targets to test.
+We selected the following template-free targets from the CASP database to build a model for: T0693 (100 residues), T0666 (196 residues), and T0695 (537 residues).  This allows us a combination of small, medium, and large targets to test.
 
 \section{Fragment database}
 
@@ -144,7 +144,7 @@ In each cycle, we build a random neighbor of the current best solution. If the n
 \newpage
 \section{Visualization}
 
-After we obtain our final target PDB file, we use Jmol to visualize it. At the same time, we also visualize the native one to compare it with our prediction.  The left one is a target structure we generated (T0644), while right one is the native structure.
+After we obtain a PDB file for each step of the simulated annealing process, we use PyMOL to visualize the process by displaying each model, then playing them back sequentially in the same order as they were generated.
 
 \begin{figure}
 \centering
@@ -164,13 +164,41 @@ After we obtain our final target PDB file, we use Jmol to visualize it. At the s
 
 \section{Results/statistics}
 
-
+As before, our targets are: T0693 (100 residues), T0666 (196 residues), and T0695 (537 residues).  Each score contains the best result from the 9-sequence replacement pass, followed by the score from the best 3-sequence replacement pass.
 
 \subsection{Scores}
 \begin{center}
-    \begin{tabular}{ | l | l | l | p{2cm} |}
+\begin{tabular}{|l|c|c|c|r|}
+\multicolumn{5}{c}{T0693} \\
     \hline
+      & Linear - 9 & Linear - 3 & Sigmoid - 9 & Sigmoid - 3\\ \hline
+    dDFIRE & -175.6 & -177.39 & -180.98 & -194.71 \\ \hline
+    TM-Score & 0.9971 & 0.9072 & 0.9971 & 0.9072 \\ \hline
+    RMSD & 0.23 & 1.666 & 0.9971 & 0.9072 \\
+    \hline
+    \end{tabular}
+\end{center}
 
+\begin{center}
+\begin{tabular}{|l|c|c|c|r|}
+\multicolumn{5}{c}{T0666} \\
+    \hline
+      & Linear - 9 & Linear - 3 & Sigmoid - 9 & Sigmoid - 3\\ \hline
+    dDFIRE & -75.27 & -121.34 & -82.85 & -125.35 \\ \hline
+    TM-Score & 0.9971 & 0.9072 & 0.9971 & 0.9072 \\ \hline
+    RMSD & 0.23 & 1.666 & 0.9971 & 0.9072 \\
+    \hline
+    \end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{|l|c|c|c|r|}
+\multicolumn{5}{c}{T0695} \\
+    \hline
+      & Linear - 9 & Linear - 3 & Sigmoid - 9 & Sigmoid - 3\\ \hline
+    dDFIRE &  -372.27 & -375.93 & -425.11 & -431.09 \\ \hline
+    TM-Score & 0.9971 & 0.9072 & 0.9971 & 0.9072 \\ \hline
+    RMSD & 0.23 & 1.666 & 0.9971 & 0.9072 \\
     \hline
     \end{tabular}
 \end{center}
