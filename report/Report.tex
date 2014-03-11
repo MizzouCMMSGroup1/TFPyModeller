@@ -92,7 +92,6 @@ First, we selected a set of 17,000 PDB database with sequence lengths of 100-150
 \end{program}
 
 Then, we repeat the process for each sequence of nine residues:
-
 \begin{program}
   \FOR i:=1 \TO (length(PDB)-1)-9 \STEP 1 \DO
 	a := PDB[i], b:= PDB[i+1], c:= PDB[i+2],  \dotso
@@ -141,28 +140,12 @@ In each cycle, we build a random neighbor of the current best solution. If the n
 
 (need a section about dDFIRE
 
-\newpage
 \section{Visualization}
 
 After we obtain a PDB file for each step of the simulated annealing process, we use PyMOL to visualize the process by displaying each model, then playing them back sequentially in the same order as they were generated.
 
-\begin{figure}
-\centering
-\begin{minipage}{.5\textwidth}
-  \centering
-  \includegraphics[width=.9\linewidth]{target_group_v2}
-  \captionof{figure}{Target structure}
-  \label{fig:test1}
-\end{minipage}%
-\begin{minipage}{.5\textwidth}
-  \centering
-  \includegraphics[width=.9\linewidth]{target_native}
-  \captionof{figure}{Native structure}
-  \label{fig:test2}
-\end{minipage}
-\end{figure}
 
-\section{Results/statistics}
+\section{Results}
 
 As before, our targets are: T0693 (100 residues), T0666 (196 residues), and T0695 (537 residues).  Each score contains the best result from the 9-sequence replacement pass, followed by the score from the best 3-sequence replacement pass.
 
@@ -173,8 +156,8 @@ As before, our targets are: T0693 (100 residues), T0666 (196 residues), and T069
     \hline
       & Linear - 9 & Linear - 3 & Sigmoid - 9 & Sigmoid - 3\\ \hline
     dDFIRE & -175.6 & -177.39 & -180.98 & -194.71 \\ \hline
-    TM-Score & 0.9971 & 0.9072 & 0.9971 & 0.9072 \\ \hline
-    RMSD & 0.23 & 1.666 & 0.9971 & 0.9072 \\
+    TM-Score & 0.0891 & 0.0745 & 0.1162 & 0.0908 \\ \hline
+    RMSD & 16.856 & 16.868 & 14.447 & 14.554 \\
     \hline
     \end{tabular}
 \end{center}
@@ -185,8 +168,8 @@ As before, our targets are: T0693 (100 residues), T0666 (196 residues), and T069
     \hline
       & Linear - 9 & Linear - 3 & Sigmoid - 9 & Sigmoid - 3\\ \hline
     dDFIRE & -75.27 & -121.34 & -82.85 & -125.35 \\ \hline
-    TM-Score & 0.9971 & 0.9072 & 0.9971 & 0.9072 \\ \hline
-    RMSD & 0.23 & 1.666 & 0.9971 & 0.9072 \\
+    TM-Score & 0.16113 & 0.162 & 0.1779 & 0.1565 \\ \hline
+    RMSD & 23.162 & 22.569 & 25.193 & 30.457 \\
     \hline
     \end{tabular}
 \end{center}
@@ -197,14 +180,41 @@ As before, our targets are: T0693 (100 residues), T0666 (196 residues), and T069
     \hline
       & Linear - 9 & Linear - 3 & Sigmoid - 9 & Sigmoid - 3\\ \hline
     dDFIRE &  -372.27 & -375.93 & -425.11 & -431.09 \\ \hline
-    TM-Score & 0.9971 & 0.9072 & 0.9971 & 0.9072 \\ \hline
-    RMSD & 0.23 & 1.666 & 0.9971 & 0.9072 \\
+    TM-Score & 0.1061 & 0.1362 & 0.13 & 0.119 \\ \hline
+    RMSD & 36.765 & 37.403 & 39.106 & 41.541 \\
     \hline
     \end{tabular}
 \end{center}
 
 \subsection{Future improvements}
 
+\begin{figure}
+\centering
+
+\begin{minipage}{1.0\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{t0666}
+  \captionof{figure}{}
+  \label{fig:test1}
+\end{minipage}%
+
+\begin{minipage}{1.0\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{t0695}
+  \captionof{figure}{}
+  \label{fig:test2}
+\end{minipage}
+
+\begin{minipage}{1.0\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{t0693}
+  \captionof{figure}{}
+  \label{fig:test2}
+\end{minipage}
+
+\end{figure}
+
+Also we want to check whether our refinement is really good, and find out which function fits our cool schedule, we plot three histograms for each target to compare their results. From figures, we can find that our refinement can improve the quality of predictions, but only a little bit. And Linear function and sigmoid function performs well in one target, as a result, we can’t decide which one is better. We need more targets to test.
 
 
 \section{Citations}
