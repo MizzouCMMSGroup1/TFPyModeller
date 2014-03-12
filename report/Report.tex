@@ -24,10 +24,10 @@
 \definecolor{mylilas}{RGB}{170,55,241}
 
 
-\title{Ab-initio modeling using fragment matching, simulated annealing and an energy function}
+\title{Ab-initio protein modeling using fragment matching, simulated annealing and an energy function}
 \author{Caiwei Wang, Xiaokai Qian, Sean Lander, \\Haipei Fan, Puneet Gaddam, Brett Koonce\\\\University of Missouri - Columbia}
 
-\date{March 10, 2013}
+\date{March 12, 2013}
 
 \algloopdefx{NoEndIf}[1]{\textbf{If} #1 \textbf{then}}
 
@@ -40,7 +40,7 @@ Our goal is to develop a simple prototype of fragment assembly template-free mod
 
 \section{Introduction}
 
-Template free modeling is an important technique in modern bioinformatics since not all proteins have templates. First, we begin with PDB sequences converting into torsion angles using third party tools RAMA/LIPA (part of CRONKITE). Using a sliding window algorithm, we can add millions of fragments to our database. Then, for each segment, we can do a query for a match/similar protein in the database.\\\\
+Template free modeling is an important technique in modern bioinformatics since many proteins do not have good templates to base a computational model on. First, we begin with PDB sequences converting into torsion angles using third party tools RAMA/LIPA (part of CRONKITE). Using a sliding window algorithm, we can add millions of fragments to our database. Then, for each segment, we can do a query for a match/similar protein in the database.\\\\
 We use simulated annealing to score, when the current solution’s neighbor is better, accepted. If not, we select it with a probability based on the current temperature. For our project, we implemented a basic homology modeling pipeline in python, using a number of external tools like DFIRE, PyMOL and TM-score to build/present a final visualized model.
 
 
@@ -138,16 +138,11 @@ In each cycle, we build a random neighbor of the current best solution. If the n
 
 \subsection{d-DFIRE score}
 
-The DFIRE-based statistical potential is a more physically accurate potential than other all-atom statistical potentials because the potential satisfies the physical requirement that the same water-mediated interaction between amino acid residues is responsible for folding and binding. \\
-
-DFIRE-based statistical potential is more accurate for longer loops (9 to 12 residues). The performance of the DFIRE potential for loop selections is remarkable because the computational cost of a statistical potential is only a fraction of what is needed for physical-based energy functions with implicit solvation models. The results suggest that a single-term DFIRE-statistical energy function can provide an accurate loop prediction at a fraction of computing cost required for more complicate physical-based energy functions.
+To provide an objective score of our new protein for the purposes of picking which model to accept, we use DFIRE.  The DFIRE-based statistical potential is a more physically accurate potential than other all-atom statistical potentials because the potential satisfies the physical requirement that the same water-mediated interaction between amino acid residues is responsible for folding and binding.   This potential is more accurate for longer loops (9 to 12 residues). The performance of the DFIRE potential for loop selections is useful as well because the computational cost of a statistical potential is only a fraction of what is needed for physical-based energy functions with implicit solvation models. As such, a single-term DFIRE-statistical energy function can provide an accurate loop prediction at a fraction of computing cost required for more complicate physical-based energy functions.
 
 \section{Visualization}
 
-After we obtain a PDB file for each step of the simulated annealing process, we use PyMOL to visualize the process by displaying each model, then playing them back sequentially in the same order as they were generated.
-
-PyMOL is an OpenGL based molecular visualization system. PyMOL is a Python-enhanced molecular graphics tool. It excels at 3D visualization of proteins, small molecules, density, surfaces, and trajectories. It also includes molecular editing, ray tracing, and movies.  PyMOL can produce high-quality 3D images of small molecules and biological macromolecules, such as proteins. According to the original author, almost a quarter of all published images of 3D protein structures in the scientific literature were made using PyMOL. PyMOL is one of a few open-source visualization tools available for use in structural biology.
-
+After we obtain a PDB file for each step of the simulated annealing process, we use PyMOL to visualize the process by displaying each model, then playing them back sequentially in the same order as they were generated.  PyMOL is an open source, OpenGL based molecular visualization system.  It excels at 3D visualization of proteins, small molecules, density, surfaces, and trajectories. It also includes molecular editing, ray tracing, and movies.  PyMOL can produce high-quality 3D images of small molecules and biological macromolecules, such as proteins.  We loaded our PDB temporary files (produced at each simulated annealing step), and utilized PyMOL's cartoon mode to see the way the algorithm procedurally improves the protein backbone.
 
 \section{Results}
 
@@ -218,20 +213,20 @@ As before, our targets are: T0693 (100 residues), T0666 (196 residues), and T069
 
 \end{figure}
 
-Also we want to check whether our refinement is really good, and find out which function fits our cool schedule, we plot three histograms for each target to compare their results. From figures, we can find that our refinement can improve the quality of predictions, but only a little bit. And Linear function and sigmoid function performs well in one target, as a result, we can’t decide which one is better. We need more targets to test.
-
+Finally, we want to check whether our refinement is actually valid and find out which cooling schedule function improves our model the most.  So, we plot three histograms for each target to compare their results using RMSD.  From figures, we can find that our 3-sequence refinement can improve the quality of predictions, but only by a little bit.  The sigmoid function performs better than our linear function with respect to DFIRE scores, but in general we cannot claim that it produces better results when we look at the objective RMSD and TM-Score functions.  We need to test more targets.
 
 \section{Citations}
 
 We thank the following tools and papers: \\\\
 
-Zhang, C., Liu, S., and Zhou, Y., Accurate and efficient loop selections using DFIRE-based all-atom statistical potential., Protein Sci. 13, 391-399 (2004).
+Zhang, C., Liu, S., and Zhou, Y., Accurate and efficient loop selections using DFIRE-based all-atom statistical potential., Protein Sci. 13, 391-399 (2004).\\
 
-PyMOL: http://sourceforge.net/projects/pymol/
+PyMOL: http://sourceforge.net/projects/pymol/\\
 
-Podtelezhnikov, Alexei and Wild, David.  CRANKITE: A fast polypeptide backbone conformation sampler, Source Code for Biology and Medicine.  Vol 3, 2008.  Url: http://www.scfbm.org/content/3/1/12
+Podtelezhnikov, Alexei and Wild, David.  CRANKITE: A fast polypeptide backbone conformation sampler, Source Code for Biology and Medicine.  Vol 3, 2008.\\Url: http://www.scfbm.org/content/3/1/12\\
 
-
+CASP: Critical Assessment of Techniques for Protein Structure Prediction.\\
+http://predictioncenter.org/casp10/ \\\\
 
 \end{document}
 
