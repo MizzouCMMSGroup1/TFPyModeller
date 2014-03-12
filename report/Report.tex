@@ -138,11 +138,15 @@ In each cycle, we build a random neighbor of the current best solution. If the n
 
 \subsection{d-DFIRE score}
 
-(need a section about dDFIRE
+The DFIRE-based statistical potential is a more physically accurate potential than other all-atom statistical potentials because the potential satisfies the physical requirement that the same water-mediated interaction between amino acid residues is responsible for folding and binding. \\
+
+DFIRE-based statistical potential is more accurate for longer loops (9 to 12 residues). The performance of the DFIRE potential for loop selections is remarkable because the computational cost of a statistical potential is only a fraction of what is needed for physical-based energy functions with implicit solvation models. The results suggest that a single-term DFIRE-statistical energy function can provide an accurate loop prediction at a fraction of computing cost required for more complicate physical-based energy functions.
 
 \section{Visualization}
 
 After we obtain a PDB file for each step of the simulated annealing process, we use PyMOL to visualize the process by displaying each model, then playing them back sequentially in the same order as they were generated.
+
+PyMOL is an OpenGL based molecular visualization system. PyMOL is a Python-enhanced molecular graphics tool. It excels at 3D visualization of proteins, small molecules, density, surfaces, and trajectories. It also includes molecular editing, ray tracing, and movies.  PyMOL can produce high-quality 3D images of small molecules and biological macromolecules, such as proteins. According to the original author, almost a quarter of all published images of 3D protein structures in the scientific literature were made using PyMOL. PyMOL is one of a few open-source visualization tools available for use in structural biology.
 
 
 \section{Results}
@@ -221,6 +225,11 @@ Also we want to check whether our refinement is really good, and find out which 
 
 We thank the following tools and papers: \\\\
 
+Zhang, C., Liu, S., and Zhou, Y., Accurate and efficient loop selections using DFIRE-based all-atom statistical potential., Protein Sci. 13, 391-399 (2004).
+
+PyMOL: http://sourceforge.net/projects/pymol/
+
+Podtelezhnikov, Alexei and Wild, David.  CRANKITE: A fast polypeptide backbone conformation sampler, Source Code for Biology and Medicine.  Vol 3, 2008.  Url: http://www.scfbm.org/content/3/1/12
 
 
 
